@@ -2,9 +2,12 @@ ldb
 ===
 基于leveldb的服务端
 
-version:0.1
+version
+===
+0.1
 
 defect&&roadmap:
+===
 
 1 事件处理只有基于kqueue的。增加linux-epoll支持。
 
@@ -23,6 +26,7 @@ defect&&roadmap:
 8 完善异常处理，增加中断信号处理。
 
 难缠的问题：
+===
 
 1 据说llvm-g++4.2在预编译头文件时有bug，改用g++4.7后正常。
 
