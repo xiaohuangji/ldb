@@ -19,7 +19,7 @@ public:
     bool put(const std::string key ,const std::string value);
     bool get(const std::string key,std::string &result);
     static Ldb* getInstance();
-    static void init(Server s);
+    static void init(Server* s);
 private:
     Ldb();
     ~Ldb();

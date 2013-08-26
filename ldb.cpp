@@ -20,8 +20,8 @@ Ldb::Ldb(){
     options.create_if_missing = true;
     leveldb::Status status = leveldb::DB::Open(options, db_dir, &rdb);
 }
-void Ldb::init(Server s){
-    db_dir=s.db_dir;
+void Ldb::init(Server* s){
+    db_dir=s->db_dir;
 }
 
 Ldb::~Ldb(){

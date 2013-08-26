@@ -11,46 +11,46 @@
 
 using namespace std;
 
-Lconfig::Lconfig(const string path){
+Lconfig::Lconfig(const string &path){
     _path=path;
 }
 
-void initOneSetting(Server &server,const string key ,const string value){
+void initOneSetting(Server* server,const string key ,const string value){
     if(key=="host"){
-        server.host=value;
+        server->host=value;
         return;
     }
     if(key=="port"){
-        server.port= atoi(value.c_str());
+        server->port= atoi(value.c_str());
         return;
     }
     if(key=="log_level"){
-        server.log_level=value;
+        server->log_level=value;
         return;
     }
     if(key=="log_file"){
-        server.log_file=value;
+        server->log_file=value;
         return;
     }
     if(key=="daemon"){
         if(value=="0")
-            server.daemon=false;
+            server->daemon=false;
         else
-            server.daemon=true;
+            server->daemon=true;
         return;
     }
     if(key=="max_client"){
-        server.max_client=atoi(value.c_str());
+        server->max_client=atoi(value.c_str());
         return;
     }
     if(key=="db_dir"){
-        server.db_dir=value;
+        server->db_dir=value;
         return;
     }
 }
 
-Server Lconfig::initServerConfig(){
-    Server server=Server();
+Server* Lconfig::initServerConfig(){
+    Server* server=new Server();
     _file=new ifstream(_path.c_str());
     char buf[100];
     while(!_file->eof()){
@@ -63,5 +63,6 @@ Server Lconfig::initServerConfig(){
         string value=s.substr(position+1,s.length()-1);
         initOneSetting(server, key,value);
     }
+    delete _file;
     return server;
 }

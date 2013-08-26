@@ -20,8 +20,6 @@
 
 #define LE_MAXSIZE 1000
 
-#define LOG_MSG_SIZE 64
-
 class Levent{
 public:
     Levent(int listenfd,int size);

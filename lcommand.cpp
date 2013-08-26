@@ -27,7 +27,9 @@ bool Lcommand::exec(LpBody* lpBody){
     }else{
         return false;
     }
-    return command->runcommand(lpBody);
+    bool result= command->runcommand(lpBody);
+    delete command;
+    return result;
     
 }
 

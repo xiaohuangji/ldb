@@ -20,7 +20,7 @@ enum LLEVEL{
 
 class Llog{
 public:
-    static void init(Server s);
+    static void init(Server* s);
     static Llog* getInstance();
     void debug(const std::string msg);
     void info(const std::string msg);
@@ -30,6 +30,7 @@ public:
     void info(const char* msg);
     void warning(const char* msg);
     void error(const char* msg);
+    void log(LLEVEL level,const char* fmt,...);
 private:
     Llog();
     ~Llog();

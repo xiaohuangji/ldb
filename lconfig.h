@@ -15,8 +15,8 @@
 
 class Lconfig{
 public:
-    Lconfig(const std::string path);
-    Server initServerConfig();
+    Lconfig(const std::string &path);
+    Server* initServerConfig();
     
 private:
     std::string _path;

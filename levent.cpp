@@ -90,17 +90,15 @@ void Levent::run(){
 }
 int Levent::acceptClient(){
     int client_id =TcpServer::tcpAccept(_listenfd);
-    char buf[LOG_MSG_SIZE];
-    sprintf(buf, "%s:%d","accetpclient:",client_id);
-    _logger->info(buf);
+    _logger->log(DEBUGL,"%s:%d","acceptclient",client_id);
     return addNetEvent(client_id,NE_READABLE);
 }
 
 int Levent::receiveClient(int fd,int cdata){
     if(cdata==0||!_linkerManager->handle(fd,cdata)){
-        cout<<"closefd:"<<fd<<endl;
         _linkerManager->rmLinker(fd);
         deleteNetEvent(fd,NE_READABLE);
+        _logger->log(DEBUGL, "%s:%d","client disconnect",fd);
         return 0;
     }
     return cdata;

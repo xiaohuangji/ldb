@@ -27,16 +27,16 @@ Llog::~Llog(){
     fclose(_file);
 }
 
-void Llog::init(Server s){
-    _path=s.log_file;
+void Llog::init(Server* s){
+    _path=s->log_file;
     
-    if(s.log_level.compare("debug")){
+    if(s->log_level.compare("debug")){
         _level=DEBUGL;
-    }else if(s.log_level.compare("info")){
+    }else if(s->log_level.compare("info")){
         _level=INFOL;
-    }else if(s.log_level.compare("warning")){
+    }else if(s->log_level.compare("warning")){
         _level=WARNINGL;
-    }else if(s.log_level.compare("error")){
+    }else if(s->log_level.compare("error")){
         _level=ERRORL;
     }else{
         _level=DEBUGL;
@@ -62,6 +62,28 @@ void Llog::rawLog(LLEVEL level, const char* msg){
     off = strftime(buf,sizeof(buf),"%d %b %H:%M:%S.",localtime(&tv.tv_sec));
     snprintf(buf+off,sizeof(buf)-off,"%03d",(int)tv.tv_usec/1000);
     fprintf(_file,"%s %s %s %s\n",buf,levelstr[level],__FILE__,msg);
+    fflush(_file);
+}
+
+void Llog::log(LLEVEL level, const char *fmt, ...){
+    if(level<_level)
+        return ;
+    const char* levelstr[]={"debug","info","warning","error"};
+    //msg
+    char buffer[80];
+    va_list argptr;
+    int cnt;
+    va_start(argptr, fmt);
+    cnt = vsprintf(buffer, fmt, argptr);
+    va_end(argptr);
+    //date
+    char buf[64];
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    int off = strftime(buf,sizeof(buf),"%d %b %H:%M:%S.",localtime(&tv.tv_sec));
+    //output
+    snprintf(buf+off,sizeof(buf)-off,"%03d",(int)tv.tv_usec/1000);
+    fprintf(_file,"%s %s %s %s\n",buffer,levelstr[level],__FILE__,buffer);
     fflush(_file);
 }
 

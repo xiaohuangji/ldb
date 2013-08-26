@@ -25,7 +25,7 @@ bool Linker::getPackage(int llen){
             return false;
         hrSize+=c;
     }
-    *(_buffer+llen)=NULL;
+    *(_buffer+llen)=0;
     _plen=hrSize;
     return true;
 }
@@ -47,7 +47,7 @@ bool Linker::parseHead(){
             strncpy(_current_head+_current_head_cursor,_buffer+_cursor,left_head_size);
             _current_head_cursor+=left_head_size;
             _cursor+=left_head_size;
-            *(_current_head+_current_head_cursor)=NULL;
+            *(_current_head+_current_head_cursor)=0;
             return true;//头已经解析完成，接着执行body
         }
         
@@ -59,10 +59,10 @@ bool genHead(LpHead* lpHead,const char* data){
     
     char argc[HeadArgc+1];
     strncpy(argc, data, HeadArgc);
-    argc[HeadArgc]=NULL;
+    argc[HeadArgc]=0;
     char bodylen[HeadBodyLen+1];
     strncpy(bodylen, data+HeadArgc, HeadBodyLen);
-    bodylen[HeadBodyLen]=NULL;
+    bodylen[HeadBodyLen]=0;
     lpHead->argc=atoi(argc);
     lpHead->bodylen=atoi(bodylen);
     return true;
@@ -77,7 +77,7 @@ bool genBody(LpBody* lpBody,const char* data){
         if(*temp=='#'){
             char* c=(char*)malloc(j);
             strncpy(c,data+i,j);
-            c[j-1]=NULL;
+            c[j-1]=0;
             int count=atoi(c);
             char* str=(char*)malloc(count);
             strncpy(str,temp+1,count);
@@ -136,7 +136,7 @@ bool Linker::parseBody(){
             strncpy(_current_body+_current_body_cursor,_buffer+_cursor,left_body_size);
             _current_body_cursor+=left_body_size;
             _cursor+=left_body_size;
-            *(_current_body+_current_body_cursor)=NULL;
+            *(_current_body+_current_body_cursor)=0;
             return true;//body解析完成，执行后续逻辑
         }
         

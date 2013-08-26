@@ -17,26 +17,30 @@ using namespace std;
 
 int main(int argc,char * argv[])
 {
+    
     char buffer[100];
     getcwd(buffer, 100);
     //init
     Lconfig config=Lconfig(string(buffer)+"/lbase.conf");
-    Server server=config.initServerConfig();
-    Llog::init(server);
-    Ldb::init(server);
+    Server* server=config.initServerConfig();
     
-    //listen
-    int listenfd=TcpServer::tcpListen(server.host.c_str(), server.port);
-    
-    //run loop
-    Levent *le=new Levent(listenfd,server.max_client);
-    le->run();
-    
-    if (server.daemon == true) {
+    if (server->daemon == true) {
         pid_t pid = fork();
         if (pid < 0)
             exit(EXIT_FAILURE);
         if (pid > 0)
             exit(EXIT_SUCCESS);
     }
+    
+    Llog::init(server);
+    Ldb::init(server);
+    
+    //listen
+    int listenfd=TcpServer::tcpListen(server->host.c_str(), server->port);
+    
+    //run loop
+    Levent *le=new Levent(listenfd,server->max_client);
+    le->run();
+    
+
 }

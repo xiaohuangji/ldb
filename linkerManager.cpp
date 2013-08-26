@@ -18,16 +18,12 @@ bool LinkerMananer::handle(int fd,int llen){
         ++itr;
     }
     if(itr!=_linkers.end()){
-        char buf[LOG_MSG_SIZE];
-        sprintf(buf, "%s:%d","linker exsited linkers:",_linkers.size());
-        _logger->info(buf);
+        _logger->log(INFOL, "%s:%d","linker exsited linkers",_linkers.size());
         return (*itr)->handle(llen);
     }else{
         Linker *linker=new Linker(fd);
         _linkers.push_back(linker);
-        char buf[LOG_MSG_SIZE];
-        sprintf(buf, "%s:%d","pushback to linkermanager:",fd);
-        _logger->info(buf);
+        _logger->log(INFOL, "%s:%d","pushback to linkermanager",fd);
         return _linkers.back()->handle(llen);
     }
     
