@@ -19,6 +19,7 @@ struct  Server{
     std::string log_file;
     std::string log_level;
     std::string db_dir;
+    std::string pid_file;
 };
 
 

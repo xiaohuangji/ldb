@@ -3,3 +3,4 @@
 *.gch
 data/*
 ldb_server
+ldb.pid

@@ -47,6 +47,10 @@ void initOneSetting(Server* server,const string key ,const string value){
         server->db_dir=value;
         return;
     }
+    if(key=="pid_file"){
+        server->pid_file=value;
+        return;
+    }
 }
 
 Server* Lconfig::initServerConfig(){
