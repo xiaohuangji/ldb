@@ -1,4 +1,8 @@
-ldb
+Yuange
+===
+
+Yuange is C++ project to wrap the leveldb library. Initially want to build a very cool application like Redis. 
+
 ===
 基于leveldb的服务端
 
@@ -24,10 +28,3 @@ defect&&roadmap:
 7 内存溢出等问题未测试。
 
 8 完善异常处理，增加中断信号处理。
-
-难缠的问题：
-===
-
-1 据说llvm-g++4.2在预编译头文件时有bug，改用g++4.7后正常。
-
-2 通过链接leveldb动态库有问题，改用静态库后正常。
